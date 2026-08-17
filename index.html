@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roktim Moran — Semiconductor Device &amp; Test Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12151A;
+    --surface:#1A1F27;
+    --surface-2:#212833;
+    --line: rgba(232,234,237,0.10);
+    --oxide:#3E6C86;
+    --oxide-dim:#2B4A5C;
+    --copper:#C1793C;
+    --copper-dim:#8C5A2C;
+    --text:#E8EAED;
+    --text-dim:#9AA3B0;
+    --text-faint:#606B7A;
+    --radius: 3px;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+    --disp: 'Space Grotesk', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 28px;}
+
+  /* subtle wafer-grid background texture */
+  .grid-bg{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 80%);
+    opacity:0.5;
+  }
+
+  header{
+    position:sticky; top:0; z-index:10;
+    background:rgba(18,21,26,0.85);
+    backdrop-filter: blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:16px; padding-bottom:16px;
+  }
+  .brand{
+    font-family:var(--mono); font-size:14px; letter-spacing:0.02em; color:var(--text-dim);
+  }
+  .brand b{color:var(--text); font-weight:500;}
+  .navlinks{display:flex; gap:28px; font-family:var(--mono); font-size:13px;}
+  .navlinks a{color:var(--text-dim); text-decoration:none; transition:color .15s;}
+  .navlinks a:hover{color:var(--copper);}
+
+  /* HERO */
+  .hero{position:relative; z-index:1; padding:96px 0 72px;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:var(--mono); font-size:12px; color:var(--oxide);
+    text-transform:uppercase; letter-spacing:0.14em;
+    margin-bottom:28px;
+  }
+  .eyebrow::before{content:''; width:7px;height:7px;background:var(--copper); display:inline-block;}
+  h1{
+    font-family:var(--disp); font-weight:700;
+    font-size:clamp(2.4rem, 5vw, 3.6rem);
+    line-height:1.08; margin:0 0 20px; letter-spacing:-0.01em;
+    max-width:820px;
+  }
+  h1 .accent{color:var(--copper);}
+  .lede{
+    font-size:1.13rem; color:var(--text-dim); max-width:600px; margin:0 0 36px;
+  }
+  .hero-actions{display:flex; gap:14px; flex-wrap:wrap;}
+  .btn{
+    font-family:var(--mono); font-size:13px; text-decoration:none;
+    padding:12px 22px; border-radius:var(--radius);
+    display:inline-flex; align-items:center; gap:8px;
+    transition: all .15s;
+  }
+  .btn-primary{background:var(--copper); color:#15100A; font-weight:500;}
+  .btn-primary:hover{background:#D68A4D;}
+  .btn-ghost{border:1px solid var(--line); color:var(--text);}
+  .btn-ghost:hover{border-color:var(--oxide); color:var(--oxide);}
+
+  /* die-map decorative element */
+  .diemap{
+    position:absolute; right:28px; top:100px; width:220px; height:220px;
+    display:grid; grid-template-columns:repeat(6,1fr); grid-template-rows:repeat(6,1fr); gap:4px;
+    opacity:0.9;
+  }
+  .diemap div{background:var(--surface-2); border:1px solid var(--line); border-radius:1px;}
+  .diemap div.hit{background:var(--oxide-dim); border-color:var(--oxide);}
+  .diemap div.gold{background:var(--copper-dim); border-color:var(--copper);}
+  @media (max-width:880px){ .diemap{display:none;} }
+
+  /* SECTIONS */
+  section{position:relative; z-index:1; padding:64px 0; border-top:1px solid var(--line);}
+  .sec-label{
+    font-family:var(--mono); font-size:12px; color:var(--text-faint);
+    text-transform:uppercase; letter-spacing:0.14em; margin-bottom:8px;
+  }
+  h2{
+    font-family:var(--disp); font-size:1.7rem; font-weight:600; margin:0 0 32px;
+  }
+
+  /* datasheet-style spec rows for education / focus areas */
+  .spec{
+    border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;
+  }
+  .spec-row{
+    display:grid; grid-template-columns: 200px 1fr 220px;
+    gap:20px; padding:18px 22px; border-bottom:1px solid var(--line);
+    align-items:baseline;
+  }
+  .spec-row:last-child{border-bottom:none;}
+  .spec-row:hover{background:var(--surface);}
+  .spec-param{font-family:var(--mono); font-size:13px; color:var(--copper);}
+  .spec-value{font-size:15px; color:var(--text);}
+  .spec-cond{font-family:var(--mono); font-size:12px; color:var(--text-faint); text-align:right;}
+  @media (max-width:700px){
+    .spec-row{grid-template-columns:1fr; gap:6px;}
+    .spec-cond{text-align:left;}
+  }
+
+  /* focus area cards */
+  .cards{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;}
+  .card{background:var(--surface); padding:26px 24px;}
+  .card .n{font-family:var(--mono); font-size:12px; color:var(--text-faint); margin-bottom:14px;}
+  .card h3{font-family:var(--disp); font-size:1.05rem; margin:0 0 10px; font-weight:600;}
+  .card p{font-size:14px; color:var(--text-dim); margin:0;}
+  @media (max-width:800px){ .cards{grid-template-columns:1fr;} }
+
+  /* tools */
+  .tools{display:flex; flex-wrap:wrap; gap:10px;}
+  .tool{
+    font-family:var(--mono); font-size:13px; padding:8px 14px;
+    border:1px solid var(--line); border-radius:var(--radius); color:var(--text-dim);
+  }
+  .tool.core{border-color:var(--oxide-dim); color:var(--oxide); background:rgba(62,108,134,0.08);}
+
+  /* building now */
+  .building{
+    border:1px dashed var(--line); border-radius:var(--radius);
+    padding:24px; display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap;
+  }
+  .building .tag{font-family:var(--mono); font-size:11px; color:var(--copper); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:6px;}
+
+  footer{
+    position:relative; z-index:1; padding:48px 0 64px; border-top:1px solid var(--line);
+    text-align:center;
+  }
+  footer .contactline{font-family:var(--mono); font-size:14px; color:var(--text-dim);}
+  footer a{color:var(--copper); text-decoration:none;}
+  footer .copy{margin-top:18px; font-size:12px; color:var(--text-faint);}
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<header>
+  <nav class="wrap">
+    <div class="brand"><b>Roktim Moran</b> // device &amp; test eng.</div>
+    <div class="navlinks">
+      <a href="#focus">Focus</a>
+      <a href="#education">Education</a>
+      <a href="#tools">Tools</a>
+      <a href="#building">Building</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<div class="hero wrap">
+  <div class="diemap" aria-hidden="true">
+    <div></div><div></div><div class="hit"></div><div></div><div></div><div></div>
+    <div></div><div class="hit"></div><div class="hit"></div><div class="hit"></div><div></div><div></div>
+    <div class="hit"></div><div class="hit"></div><div class="gold"></div><div class="hit"></div><div class="hit"></div><div></div>
+    <div></div><div class="hit"></div><div class="hit"></div><div class="hit"></div><div></div><div></div>
+    <div></div><div></div><div class="hit"></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+  </div>
+  <div class="eyebrow">M.Tech Semiconductor Technology · Tezpur University · 2026</div>
+  <h1>Characterizing silicon at the<br><span class="accent">transistor level.</span></h1>
+  <p class="lede">Device engineer with hands-on experience in CMOS characterization, threshold-voltage extraction, and automated test development from my thesis work at Semiconductor Laboratory (SCL), Mohali.</p>
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="mailto:RMoran5620@gmail.com">Email me</a>
+    <a class="btn btn-ghost" href="#focus">See focus areas ↓</a>
+  </div>
+</div>
+
+<section id="focus">
+  <div class="wrap">
+    <div class="sec-label">01 — Focus areas</div>
+    <h2>What I actually work on</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="n">DEVICE</div>
+        <h3>CMOS Characterization</h3>
+        <p>Wafer-level and packaged I–V measurement, constant-current threshold-voltage extraction (±10µA) on 180nm/5V devices, NMOS/PMOS conduction and leakage analysis.</p>
+      </div>
+      <div class="card">
+        <div class="n">TEST</div>
+        <h3>Automated Test Development</h3>
+        <p>PXI-based test routine development, LabVIEW instrument control and data acquisition, structured I–V sweep sequencing for repeatable characterization.</p>
+      </div>
+      <div class="card">
+        <div class="n">RELIABILITY</div>
+        <h3>SEE &amp; Reliability Testing</h3>
+        <p>Exposure to Single Event Effects testing (SEL, SET, SEU), pre-/post-stress performance analysis, and ESCC-aligned electrical characterization methodology.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="sec-label">02 — Education</div>
+    <h2>Academic record</h2>
+    <div class="spec">
+      <div class="spec-row">
+        <div class="spec-param">M.TECH</div>
+        <div class="spec-value">Semiconductor Technology — Thesis in CMOS Device Testing</div>
+        <div class="spec-cond">Tezpur Univ. · 2026 · CGPA 8.31</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-param">B.TECH</div>
+        <div class="spec-value">Electronics &amp; Communication Engineering</div>
+        <div class="spec-cond">Tezpur Univ. · 2024</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-param">PROJECT</div>
+        <div class="spec-value">CMOS device characterization &amp; SEE test-setup development</div>
+        <div class="spec-cond">SCL, Mohali · Jul 2025 – Apr 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tools">
+  <div class="wrap">
+    <div class="sec-label">03 — Tools</div>
+    <h2>What I build with</h2>
+    <div class="tools">
+      <span class="tool core">LabVIEW</span>
+      <span class="tool core">MATLAB</span>
+      <span class="tool core">PXI / SMU instrumentation</span>
+      <span class="tool">C</span>
+      <span class="tool">Python</span>
+      <span class="tool">KiCad</span>
+      <span class="tool">Mentor Graphics</span>
+    </div>
+  </div>
+</section>
+
+<section id="building">
+  <div class="wrap">
+    <div class="sec-label">04 — Currently building</div>
+    <h2>Public projects in progress</h2>
+    <div class="building">
+      <div>
+        <div class="tag">In progress</div>
+        <strong>MOSFET I–V Curve Simulator (Python)</strong>
+        <p style="margin:6px 0 0; color:var(--text-dim); font-size:14px; max-width:520px;">A small open-source tool that plots long-channel MOSFET I–V characteristics from standard textbook square-law equations — built to demonstrate device-physics fundamentals independent of any lab-specific data.</p>
+      </div>
+      <a class="btn btn-ghost" href="https://github.com/" target="_blank" rel="noopener">View on GitHub →</a>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="sec-label" style="justify-content:center;display:flex;">05 — Contact</div>
+    <h2 style="text-align:center;">Let's talk silicon</h2>
+    <div class="contactline">
+      <a href="mailto:RMoran5620@gmail.com">RMoran5620@gmail.com</a> &nbsp;·&nbsp; +91 99577 26397
+    </div>
+    <div class="copy">Roktim Moran — Guwahati, Assam, India</div>
+  </div>
+</footer>
+
+</body>
+</html>
