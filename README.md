@@ -26,4 +26,4 @@ During my M.Tech thesis project at **Semiconductor Laboratory (SCL), Mohali** (J
 - Location: Guwahati, Assam, India — open to relocation across India
 
 ---
-*Portfolio: [add your GitHub Pages link here once published]*
+*Portfolio: Seven AUtoms of big dipper *
